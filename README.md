@@ -1,24 +1,15 @@
 # ExOrg
 
-**TODO: Add description**
+[Org mode](http://orgmode.org) parsing library for Elixir.
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
+Coming Soon
 
-  1. Add `ex_org` to your list of dependencies in `mix.exs`:
+## Author
 
-    ```elixir
-    def deps do
-      [{:ex_org, "~> 0.1.0"}]
-    end
-    ```
+Copyright © 2016 Robert Kaufmann III.
 
-  2. Ensure `ex_org` is started before your application:
+## License
 
-    ```elixir
-    def application do
-      [applications: [:ex_org]]
-    end
-    ```
-
+ExOrg is released under the [MIT License](LICENSE.md).
