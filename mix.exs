@@ -18,7 +18,12 @@ defmodule ExOrg.Mixfile do
   end
 
   defp deps do
-    []
+    [
+      # Testing and documentation
+      {:credo, "~> 0.5", only: [:dev, :test]},
+      {:inch_ex, "~> 0.5", only: [:dev, :test]},
+      {:ex_doc, "~> 0.14", only: [:dev]}
+    ]
   end
 
   defp package do
