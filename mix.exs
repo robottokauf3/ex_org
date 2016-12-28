@@ -6,6 +6,7 @@ defmodule ExOrg.Mixfile do
   def project do
     [app: :ex_org,
      version: @version,
+     description: description(),
      elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
@@ -21,8 +22,9 @@ defmodule ExOrg.Mixfile do
     [
       # Testing and documentation
       {:credo, "~> 0.5", only: [:dev, :test]},
-      {:inch_ex, "~> 0.5", only: [:dev, :test]},
-      {:ex_doc, "~> 0.14", only: [:dev]}
+      {:inch_ex, "~> 0.5", only: [:docs]},
+      {:ex_doc, "~> 0.14", only: [:dev]},
+      {:dialyxir, "~> 0.4.1", only: [:dev], runtime: false}
     ]
   end
 
