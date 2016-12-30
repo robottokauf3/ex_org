@@ -4,8 +4,12 @@ defmodule ExOrg.Parser do
   Given list of Org mode lines returns tokenized tree.
   """
 
-  def parse(lines, options) do
+  alias ExOrg.Line
 
+  def parse([], _), do: []
+
+  def parse([line | rest], options) do
+    [Line.parse(line) | parse(rest, options)]
   end
 
 end
