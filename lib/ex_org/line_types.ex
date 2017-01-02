@@ -13,6 +13,7 @@ defmodule ExOrg.LineTypes do
   defmodule Keyword,            do: defstruct [unparsed: "", key: "", value: ""]
   defmodule ListItem,           do: defstruct [unparsed: "", indent: 0, content: nil]
   defmodule Text,               do: defstruct [unparsed: "", content: ""]
-  defmodule Table,              do: defstruct [unparsed: "", content: ""]
+  defmodule TableRow,           do: defstruct [unparsed: "", cells: []]
+  defmodule TableSeparator,     do: defstruct [unparsed: ""]
 
 end

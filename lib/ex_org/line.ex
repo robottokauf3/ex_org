@@ -19,7 +19,8 @@ defmodule ExOrg.Line do
   @keyword_regex ~r/^#\+(\S+):\s*(.*)$/
 
   @list_item_regex ~r/^(\s*)([-+]|[0-9]+\.)\s+(.*)$/
-  @table_regex ~r/^\s*(\|.*\|)\s*$/
+  @table_separator_regex ~r/^\s*\|[-+|]+\|\s*$/
+  @table_row_regex ~r/^\s*(\|.*\|)\s*$/
 
   def parse(line) do
 
@@ -83,13 +84,24 @@ defmodule ExOrg.Line do
         [_, label, content] = match
         %LineTypes.FootnoteDefinition{label: label, content: content}
 
-      match = Regex.run(@table_regex, line) ->
+      Regex.run(@table_separator_regex, line) ->
+        %LineTypes.TableSeparator{}
+
+      match = Regex.run(@table_row_regex, line) ->
         [_, content] = match
-        %LineTypes.Table{content: content}
+        %LineTypes.TableRow{cells: split_table_cells(content)}
 
       true ->
         %LineTypes.Text{content: line}
     end
+  end
+
+  defp split_table_cells(row) do
+    row
+    |> String.split("|")
+    |> List.delete_at(0)
+    |> List.delete_at(-1)
+    |> Enum.map(&String.trim/1)
   end
 
 end

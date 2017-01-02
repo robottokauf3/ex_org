@@ -59,7 +59,8 @@ defmodule ExOrg.LineTest do
     {"    + foo", %LineTypes.ListItem{indent: 4, content: "foo"}},
 
     # Table
-    {"| foo | bar |", %LineTypes.Table{content: "| foo | bar |"}},
+    {"| foo | bar |", %LineTypes.TableRow{cells: ["foo", "bar"]}},
+    {"|-----+-----|", %LineTypes.TableSeparator{}},
 
     # Text
     {"I am plain text", %LineTypes.Text{content: "I am plain text"}},
