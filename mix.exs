@@ -17,11 +17,13 @@ defmodule ExOrg.Mixfile do
   end
 
   def application do
-    [applications: []]
+    [applications: [:timex]]
   end
 
   defp deps do
     [
+      {:timex, "~> 3.0"},
+
       # Testing and documentation
       {:credo, "~> 0.5", only: [:dev, :test]},
       {:inch_ex, "~> 0.5", only: [:docs]},

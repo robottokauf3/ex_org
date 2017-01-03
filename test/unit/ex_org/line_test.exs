@@ -20,9 +20,9 @@ defmodule ExOrg.LineTest do
     # Clock
     {"CLOCK:", %LineTypes.Clock{timestamp: nil, duration: nil}},
     {"CLOCK: [2016-12-30 Fri 02:16]",
-     %LineTypes.Clock{timestamp: "[2016-12-30 Fri 02:16]", duration: nil}},
+     %LineTypes.Clock{timestamp: %{start: ~N[2016-12-30 02:16:00], end: nil}, duration: nil}},
     {"CLOCK: [2016-12-30 Fri 02:16]--[2016-12-30 Fri 02:17] =>  0:01",
-     %LineTypes.Clock{timestamp: "[2016-12-30 Fri 02:16]--[2016-12-30 Fri 02:17]", duration: "0:01"}},
+     %LineTypes.Clock{timestamp: %{start: ~N[2016-12-30 02:16:00], end: ~N[2016-12-30 02:17:00]}, duration: 1}},
 
     # Comment
     {"# FOOBAR", %LineTypes.Comment{content: "FOOBAR"}},

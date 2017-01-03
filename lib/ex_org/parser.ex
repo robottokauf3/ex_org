@@ -6,6 +6,9 @@ defmodule ExOrg.Parser do
 
   alias ExOrg.Line
 
+  @doc """
+  Parses a list of lines into block types.
+  """
   def parse([], _), do: []
 
   def parse([line | rest], options) do

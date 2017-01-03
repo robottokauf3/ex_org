@@ -5,6 +5,7 @@ defmodule ExOrg.Line do
   """
 
   alias ExOrg.LineTypes
+  alias ExOrg.Helpers.Clock
 
   @blank_regex ~r/^\s*$/
   @block_begin_regex ~r/^\s*#\+BEGIN_(\S*)(\s*|\s+.*)$/
@@ -22,6 +23,9 @@ defmodule ExOrg.Line do
   @table_separator_regex ~r/^\s*\|[-+|]+\|\s*$/
   @table_row_regex ~r/^\s*(\|.*\|)\s*$/
 
+  @doc """
+  Parses a line into a line type .
+  """
   def parse(line) do
 
     line
@@ -73,9 +77,10 @@ defmodule ExOrg.Line do
       match = Regex.run(@clock_regex, line) ->
         case match do
           [_, timestamp, _, duration] ->
-            %LineTypes.Clock{timestamp: timestamp, duration: duration}
+            %LineTypes.Clock{timestamp: Clock.parse_timestamp(timestamp),
+                             duration: Clock.duration_in_minutes(duration)}
           [_, timestamp] ->
-            %LineTypes.Clock{timestamp: timestamp}
+            %LineTypes.Clock{timestamp: Clock.parse_timestamp(timestamp)}
           [_] ->
             %LineTypes.Clock{}
         end
