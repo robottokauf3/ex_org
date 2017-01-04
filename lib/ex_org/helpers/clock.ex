@@ -3,6 +3,22 @@ defmodule ExOrg.Helpers.Clock do
   Responsible for parsing clock directives.
   """
 
+  alias ExOrg.LineTypes
+
+  @doc """
+  """
+  def parse([_, timestamp, _, duration]) do
+    %LineTypes.Clock{timestamp: parse_timestamp(timestamp),
+                     duration: duration_in_minutes(duration)}
+  end
+  def parse([_, timestamp]) do
+    %LineTypes.Clock{timestamp: parse_timestamp(timestamp)}
+  end
+
+  def parse(_) do
+    %LineTypes.Clock{}
+  end
+
   @doc """
   Takes a string in the format of HH:MM and returns the duration in minutes.
   """

@@ -42,6 +42,16 @@ defmodule ExOrg.LineTest do
     # Headline
     {"* Level 1 Headline", %LineTypes.Headline{level: 1, headline: "Level 1 Headline"}},
     {"** Level 2 Headline", %LineTypes.Headline{level: 2, headline: "Level 2 Headline"}},
+    {"** TODO Level 2 Headline", %LineTypes.Headline{level: 2, headline: "Level 2 Headline", todo: "TODO"}},
+    {"** TODO [#A] Level 2 Headline", %LineTypes.Headline{level: 2,
+                                                          headline: "Level 2 Headline",
+                                                          todo: "TODO",
+                                                          priority: "A"}},
+    {"** TODO [#A] Level 2 Headline :tag_a:tag_b:", %LineTypes.Headline{level: 2,
+                                                                        headline: "Level 2 Headline",
+                                                                        todo: "TODO",
+                                                                        priority: "A",
+                                                                        tags: ["tag_a", "tag_b"]}},
 
     # HorizontalRule
 

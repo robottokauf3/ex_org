@@ -5,7 +5,7 @@ defmodule ExOrg.Line do
   """
 
   alias ExOrg.LineTypes
-  alias ExOrg.Helpers.Clock
+  alias ExOrg.Helpers
 
   @blank_regex ~r/^\s*$/
   @block_begin_regex ~r/^\s*#\+BEGIN_(\S*)(\s*|\s+.*)$/
@@ -15,7 +15,7 @@ defmodule ExOrg.Line do
   @drawer_begin_regex ~r/^\s*:([-_a-z0-9]+):\s*$/i
   @drawer_end_regex ~r/^\s*:END:\s*$/
   @footnote_definition_regex ~r/^\[fn:([0-9]+|\S+)\]\s+(.*)$/
-  @headline_regex ~r/^(\*+)\s+(.+)$/
+  @headline_regex ~r/^\*+\s+.+$/
   @horizontal_rule_regex ~r/^\s*-{5,}$/
   @keyword_regex ~r/^#\+(\S+):\s*(.*)$/
 
@@ -62,9 +62,8 @@ defmodule ExOrg.Line do
         [_, indent, _, content] = match
         %LineTypes.ListItem{indent: String.length(indent), content: content}
 
-       match = Regex.run(@headline_regex, line) ->
-        [_, level_pips, headline] = match
-        %LineTypes.Headline{level: String.length(level_pips), headline: headline}
+      Regex.run(@headline_regex, line) ->
+        Helpers.Headline.parse(line)
 
       match = Regex.run(@comment_regex, line) ->
         [_, content] = match
@@ -75,15 +74,7 @@ defmodule ExOrg.Line do
         %LineTypes.Keyword{key: key, value: value}
 
       match = Regex.run(@clock_regex, line) ->
-        case match do
-          [_, timestamp, _, duration] ->
-            %LineTypes.Clock{timestamp: Clock.parse_timestamp(timestamp),
-                             duration: Clock.duration_in_minutes(duration)}
-          [_, timestamp] ->
-            %LineTypes.Clock{timestamp: Clock.parse_timestamp(timestamp)}
-          [_] ->
-            %LineTypes.Clock{}
-        end
+        Helpers.Clock.parse(match)
 
       match = Regex.run(@footnote_definition_regex, line) ->
         [_, label, content] = match
@@ -94,19 +85,11 @@ defmodule ExOrg.Line do
 
       match = Regex.run(@table_row_regex, line) ->
         [_, content] = match
-        %LineTypes.TableRow{cells: split_table_cells(content)}
+        Helpers.Table.parse(content)
 
       true ->
         %LineTypes.Text{content: line}
     end
-  end
-
-  defp split_table_cells(row) do
-    row
-    |> String.split("|")
-    |> List.delete_at(0)
-    |> List.delete_at(-1)
-    |> Enum.map(&String.trim/1)
   end
 
 end
