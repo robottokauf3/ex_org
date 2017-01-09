@@ -20,7 +20,7 @@ defmodule ExOrg.Line do
   @keyword_regex ~r/^#\+(\S+):\s*(.*)$/
 
   @list_item_regex ~r/^(\s*)([-+]|[0-9]+\.)\s+(.*)$/
-  @table_separator_regex ~r/^\s*\|[-+|]+\|\s*$/
+  @table_separator_regex ~r/^\s*\|-.*$/
   @table_row_regex ~r/^\s*(\|.*\|)\s*$/
 
   @doc """
