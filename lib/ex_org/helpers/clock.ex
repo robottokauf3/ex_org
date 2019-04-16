@@ -8,9 +8,12 @@ defmodule ExOrg.Helpers.Clock do
   @doc """
   """
   def parse([_, timestamp, _, duration]) do
-    %LineTypes.Clock{timestamp: parse_timestamp(timestamp),
-                     duration: duration_in_minutes(duration)}
+    %LineTypes.Clock{
+      timestamp: parse_timestamp(timestamp),
+      duration: duration_in_minutes(duration)
+    }
   end
+
   def parse([_, timestamp]) do
     %LineTypes.Clock{timestamp: parse_timestamp(timestamp)}
   end
@@ -23,9 +26,10 @@ defmodule ExOrg.Helpers.Clock do
   Takes a string in the format of HH:MM and returns the duration in minutes.
   """
   def duration_in_minutes(duration) do
-    [hours, minutes] = duration
-    |> String.split(":")
-    |> Enum.map(&String.to_integer/1)
+    [hours, minutes] =
+      duration
+      |> String.split(":")
+      |> Enum.map(&String.to_integer/1)
 
     hours * 60 + minutes
   end
@@ -41,6 +45,7 @@ defmodule ExOrg.Helpers.Clock do
     case String.split(timestamp, "--") do
       [start] ->
         %{start: _parse_timestamp(start), end: nil}
+
       [start, stop] ->
         %{start: _parse_timestamp(start), end: _parse_timestamp(stop)}
     end
@@ -52,7 +57,4 @@ defmodule ExOrg.Helpers.Clock do
     |> String.trim("]")
     |> Timex.parse!("{YYYY}-{0M}-{0D} {WDshort} {h24}:{m}")
   end
-
-
-
 end

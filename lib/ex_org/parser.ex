@@ -1,5 +1,4 @@
 defmodule ExOrg.Parser do
-
   @moduledoc """
   Given list of Org mode lines returns tokenized tree.
   """
@@ -17,5 +16,4 @@ defmodule ExOrg.Parser do
   def parse([line | rest], options) do
     [Line.parse(line) | parse(rest, options)]
   end
-
 end

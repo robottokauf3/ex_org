@@ -1,5 +1,4 @@
 defmodule ExOrg.Line do
-
   @moduledoc """
   Match line types and parse into structs
   """
@@ -10,7 +9,7 @@ defmodule ExOrg.Line do
   @blank_regex ~r/^\s*$/
   @block_begin_regex ~r/^\s*#\+BEGIN_(\S*)(\s*|\s+.*)$/
   @block_end_regex ~r/^\s*#\+END_(\S+)\s*$/
-  @clock_regex ~r/^\s*CLOCK:\s*(\[.+\])?\s*(=>\s+(\d{1,2}:\d{1,2}))?$/ #TODO Support other timestamp formats
+  @clock_regex ~r/^\s*CLOCK:\s*(\[.+\])?\s*(=>\s+(\d{1,2}:\d{1,2}))?$/
   @comment_regex ~r/^\s*#\s+(.*)$/
   @drawer_begin_regex ~r/^\s*:([-_a-z0-9]+):\s*$/i
   @drawer_end_regex ~r/^\s*:END:\s*$/
@@ -27,12 +26,10 @@ defmodule ExOrg.Line do
   Parses a line into a line type .
   """
   def parse(line) do
-
     line
-    |> String.trim_trailing
+    |> String.trim_trailing()
     |> _parse()
     |> Map.put(:unparsed, line)
-
   end
 
   defp _parse(line) do
@@ -91,5 +88,4 @@ defmodule ExOrg.Line do
         %LineTypes.Text{content: line}
     end
   end
-
 end

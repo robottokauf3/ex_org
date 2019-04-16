@@ -4,16 +4,16 @@ defmodule ExOrg.Mixfile do
   @version "0.1.0"
 
   def project do
-    [app: :ex_org,
-     version: @version,
-     description: description(),
-     elixir: "~> 1.3",
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod,
-     deps: deps(),
-     test_coverage: [tool: ExCoveralls],
-     preferred_cli_env: ["coveralls": :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test],
-     package: package()]
+    [
+      app: :ex_org,
+      version: @version,
+      description: description(),
+      elixir: "~> 1.4",
+      build_embedded: Mix.env() == :prod,
+      start_permanent: Mix.env() == :prod,
+      deps: deps(),
+      package: package()
+    ]
   end
 
   def application do
@@ -25,18 +25,16 @@ defmodule ExOrg.Mixfile do
       {:timex, "~> 3.0"},
 
       # Testing and documentation
-      {:credo, "~> 0.5", only: [:dev, :test]},
-      {:inch_ex, "~> 0.5", only: [:docs]},
-      {:excoveralls, "~> 0.5", only: [:dev, :test]},
-      {:ex_doc, "~> 0.14", only: [:dev]},
-      {:dialyxir, "~> 0.4.1", only: [:dev], runtime: false}
+      {:credo, "~> 1.0.4", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.0.0-rc.6", only: [:dev], runtime: false}
     ]
   end
 
   defp package do
-    [maintainers: ["Robert Kaufmann III <rok3@rok3.me>"],
-     licenses: ["MIT"],
-     links: %{github: "https://github.com/robottokauf3/ex_org"}
+    [
+      maintainers: ["Robert Kaufmann III <rok3@rok3.me>"],
+      licenses: ["MIT"],
+      links: %{github: "https://github.com/robottokauf3/ex_org"}
     ]
   end
 

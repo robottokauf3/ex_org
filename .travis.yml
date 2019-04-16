@@ -1,12 +1,35 @@
 language: elixir
-sudo: false
-elixir:
-  - 1.3.4
-otp_release:
-  - 19.0
+
+cache:
+  directories:
+    - ~/.hex
+    - ~/.mix
+    - _build
+
+
+matrix:
+  include:
+    - otp_release: 21.3
+      elixir: 1.8
+    - otp_release: 21.3
+      elixir: 1.7
+    - otp_release: 20.3
+      elixir: 1.6
+    - otp_release: 19.3
+      elixir: 1.5
+    - otp_release: 18.3
+      elixir: 1.4
+
+install:
+  - mix local.hex --force
+  - mix local.rebar --force
+  - mix deps.get
+
 script:
   - mix test
-  - mix coveralls.travis
-after_script:
-  - MIX_ENV=docs mix deps.get
-  - MIX_ENV=docs mix inch.report
+  # - MIX_ENV=test mix dialyzer --halt-exit-status
+
+# Leave only the .plt files in build
+before_cache:
+  - mix deps.clean --all --build
+  - mix clean --build

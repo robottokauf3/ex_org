@@ -22,7 +22,10 @@ defmodule ExOrg.LineTest do
     {"CLOCK: [2016-12-30 Fri 02:16]",
      %LineTypes.Clock{timestamp: %{start: ~N[2016-12-30 02:16:00], end: nil}, duration: nil}},
     {"CLOCK: [2016-12-30 Fri 02:16]--[2016-12-30 Fri 02:17] =>  0:01",
-     %LineTypes.Clock{timestamp: %{start: ~N[2016-12-30 02:16:00], end: ~N[2016-12-30 02:17:00]}, duration: 1}},
+     %LineTypes.Clock{
+       timestamp: %{start: ~N[2016-12-30 02:16:00], end: ~N[2016-12-30 02:17:00]},
+       duration: 1
+     }},
 
     # Comment
     {"# FOOBAR", %LineTypes.Comment{content: "FOOBAR"}},
@@ -42,16 +45,18 @@ defmodule ExOrg.LineTest do
     # Headline
     {"* Level 1 Headline", %LineTypes.Headline{level: 1, headline: "Level 1 Headline"}},
     {"** Level 2 Headline", %LineTypes.Headline{level: 2, headline: "Level 2 Headline"}},
-    {"** TODO Level 2 Headline", %LineTypes.Headline{level: 2, headline: "Level 2 Headline", todo: "TODO"}},
-    {"** TODO [#A] Level 2 Headline", %LineTypes.Headline{level: 2,
-                                                          headline: "Level 2 Headline",
-                                                          todo: "TODO",
-                                                          priority: "A"}},
-    {"** TODO [#A] Level 2 Headline :tag_a:tag_b:", %LineTypes.Headline{level: 2,
-                                                                        headline: "Level 2 Headline",
-                                                                        todo: "TODO",
-                                                                        priority: "A",
-                                                                        tags: ["tag_a", "tag_b"]}},
+    {"** TODO Level 2 Headline",
+     %LineTypes.Headline{level: 2, headline: "Level 2 Headline", todo: "TODO"}},
+    {"** TODO [#A] Level 2 Headline",
+     %LineTypes.Headline{level: 2, headline: "Level 2 Headline", todo: "TODO", priority: "A"}},
+    {"** TODO [#A] Level 2 Headline :tag_a:tag_b:",
+     %LineTypes.Headline{
+       level: 2,
+       headline: "Level 2 Headline",
+       todo: "TODO",
+       priority: "A",
+       tags: ["tag_a", "tag_b"]
+     }},
 
     # HorizontalRule
 
@@ -74,12 +79,13 @@ defmodule ExOrg.LineTest do
 
     # Text
     {"I am plain text", %LineTypes.Text{content: "I am plain text"}},
-    {"I have^#(*&$^#(&*^$))crazy\tcharacters!", %LineTypes.Text{content: "I have^#(*&$^#(&*^$))crazy\tcharacters!"}},
+    {"I have^#(*&$^#(&*^$))crazy\tcharacters!",
+     %LineTypes.Text{content: "I have^#(*&$^#(&*^$))crazy\tcharacters!"}}
   ]
 
   for {text, expected} <- @line_tests do
     test("line: '" <> text <> "'") do
-      line_type = %{unquote(Macro.escape expected) | unparsed: unquote(text)}
+      line_type = %{unquote(Macro.escape(expected)) | unparsed: unquote(text)}
       assert Line.parse(unquote(text)) == line_type
     end
   end

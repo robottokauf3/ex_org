@@ -9,7 +9,6 @@ defmodule ExOrg.Helpers.Table do
   """
   def parse(content) do
     %TableRow{cells: split_table_cells(content)}
-
   end
 
   defp split_table_cells(row) do
@@ -18,5 +17,4 @@ defmodule ExOrg.Helpers.Table do
     |> String.split("|")
     |> Enum.map(&String.trim/1)
   end
-
 end
