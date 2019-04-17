@@ -19,7 +19,8 @@ defmodule ExOrg.IntegrationTest.Headlines do
 
   test "Headlines are parsed and nested properly" do
     headlines =
-      File.read!(@fixture_root <> "headlines.org")
+      (@fixture_root <> "headlines.org")
+      |> File.read!()
       |> String.split(~r{\r\n?|\n})
       |> ExOrg.parse()
 

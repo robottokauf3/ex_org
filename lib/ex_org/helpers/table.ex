@@ -1,5 +1,8 @@
 defmodule ExOrg.Helpers.Table do
   @moduledoc """
+  Responsible for parsing Table structure.
+
+  Reference: https://orgmode.org/worg/dev/org-syntax.html#Table_Rows
   """
 
   alias ExOrg.LineTypes.TableRow

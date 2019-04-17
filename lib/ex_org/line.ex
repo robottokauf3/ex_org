@@ -3,8 +3,7 @@ defmodule ExOrg.Line do
   Match line types and parse into structs
   """
 
-  alias ExOrg.LineTypes
-  alias ExOrg.Helpers
+  alias ExOrg.{Helpers, LineTypes}
 
   @blank_regex ~r/^\s*$/
   @block_begin_regex ~r/^\s*#\+BEGIN_(\S*)(\s*|\s+.*)$/
@@ -32,6 +31,7 @@ defmodule ExOrg.Line do
     |> Map.put(:unparsed, line)
   end
 
+  # credo:disable-for-next-line Credo.Check.Refactor.CyclomaticComplexity
   defp _parse(line) do
     cond do
       Regex.run(@blank_regex, line) ->

@@ -115,7 +115,8 @@ defmodule ExOrg.IntegrationTest.SingleLineElements do
 
   test "Single-line elements are parsed properly" do
     headlines =
-      File.read!(@fixture_root <> "single_line_elements.org")
+      (@fixture_root <> "single_line_elements.org")
+      |> File.read!()
       |> String.trim_trailing()
       |> String.split(~r{\r\n?|\n})
       |> ExOrg.parse()

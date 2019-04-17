@@ -1,3 +1,4 @@
+# credo:disable-for-this-file
 defmodule ExOrg.LineTypes do
   defmodule(Blank, do: defstruct(unparsed: ""))
   defmodule(BlockBegin, do: defstruct(unparsed: "", name: "", data: ""))

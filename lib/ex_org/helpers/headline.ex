@@ -1,4 +1,9 @@
 defmodule ExOrg.Helpers.Headline do
+  @moduledoc """
+  Responsible for parsing Headline structure.
+
+  Reference: https://orgmode.org/worg/dev/org-syntax.html#Headlines_and_Sections
+  """
   alias ExOrg.LineTypes.Headline
 
   @default_opts [todo_keywords: ["TODO", "DONE"]]

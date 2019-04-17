@@ -17,8 +17,10 @@ matrix:
       elixir: 1.6
     - otp_release: 19.3
       elixir: 1.5
+      env: SKIP_FORMAT_CHECK=true
     - otp_release: 18.3
       elixir: 1.4
+      env: SKIP_FORMAT_CHECK=true
 
 install:
   - mix local.hex --force
@@ -26,8 +28,10 @@ install:
   - mix deps.get
 
 script:
+  - if [ -z "$SKIP_FORMAT_CHECK" ]; then mix format --check-formatted; fi
+  - mix credo
   - mix test
-  # - MIX_ENV=test mix dialyzer --halt-exit-status
+  - MIX_ENV=test mix dialyzer --halt-exit-status
 
 # Leave only the .plt files in build
 before_cache:
